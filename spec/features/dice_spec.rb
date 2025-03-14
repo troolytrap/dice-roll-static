@@ -90,3 +90,27 @@ describe "/dice/5/4" do
     end
   end
 end
+
+describe "/dice/[RANDOM_DICE]/[RANDOM_SIDES]" do
+  it "has a level one heading with the text '[RANDOM_DICE]d[RANDOM_SIDES]'", points: 1 do
+
+    random_dice = rand(100)
+    random_sides = rand(100)
+    visit "/dice/#{random_dice}/#{random_sides}"
+
+    expect(page).to have_tag("h1", text: /\s*#{random_dice}d#{random_sides}\s*/)
+  end
+end
+
+describe "/dice/[RANDOM_DICE]/[RANDOM_SIDES]" do
+  it "displays the outcome of rolling [RANDOM_DICE] [RANDOM_SIDES]-sided dice in li's of an unordered list", points: 3 do
+
+    random_dice = rand(100)
+    random_sides = rand(100)
+    visit "/dice/#{random_dice}/#{random_sides}"
+
+    expect(page).to have_tag("ul") do
+      with_tag("li", :text => /\d+/, :count => random_dice)
+    end
+  end
+end
