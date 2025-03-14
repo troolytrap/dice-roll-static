@@ -14,4 +14,15 @@ class DiceController < ApplicationController
   def five_four
     render({ :template => "dice_templates/5d4" })
   end
+  def anydice
+    @quantity = params.fetch("quantity")
+    @sides = params.fetch("sides")
+    @rolls = []
+    @quantity.to_i.times do
+      die = rand(1..@sides.to_i)
+      @rolls.push(die)
+    end
+    render({ :template => "dice_templates/anydice" })
+
+  end
 end
